@@ -1,0 +1,252 @@
+<div class="div-chat-ai">
+    <div class="chat-container" *ngIf="open == true">
+        <div class="chat-header">
+            Gemini
+        </div>
+        <div class="chat-messages">
+            <div class="message received">
+                <p>Hello! How can I help you today?</p>
+                <!-- <span class="timestamp">10:00 AM</span> -->
+            </div>
+            <ng-container *ngFor="let chat of  chatBoxMess ">
+                <div class="message sent">
+                    <p>{{chat?.user}}</p>
+                    <!-- <span class="timestamp">10:02 AM</span> -->
+                </div>
+                <div class="message received">
+                    <p>{{chat?.AI}}</p>
+                    <!-- <span class="timestamp">10:00 AM</span> -->
+                </div>
+            </ng-container>
+        </div>
+        <div class="chat-input">
+            <input type="text" [(ngModel)]="mess" placeholder="Type your message...">
+            <button (click)="sendChat()">Send</button>
+        </div>
+
+    </div>
+    <div class="iconchat" style="cursor: pointer;" (click)="open = !open">
+        <img src="assets/gemini-ai-icon.png" width="50" height="50">
+    </div>
+</div>
+
+<div class="position-relative bg-white d-flex p-0 dashboard-admin margin-0">
+
+
+
+    <!-- Sidebar Start -->
+    <div class="sidebar pe-4 pb-3">
+        <nav class="navbar bg-light navbar-light">
+            <a href="index.html" class="navbar-brand mx-4 mb-3">
+                <h5 style="color: black;"><i style="color: black; margin-right: 5px;"
+                        class="fa fa-tachometer-alt me-2"></i>Dashboard</h5>
+            </a>
+            <div class="navbar-nav w-100">
+                <!-- <a class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a> -->
+                <a type="button" class="nav-link  " style="display: flex;" (click)="checkPage = 1">
+                    <i class="fa fa-laptop me-2"></i>
+                    <span style="text-align: left; font-size: 13px; margin-top: 4px;"> Kết Quả Mô Hình Tập Dữ Liệu
+                        CWRU</span></a>
+                <a type="button" class="nav-link  " style="display: flex;" (click)="log()">
+                    <i class="fa fa-laptop me-2"></i>
+                    <span style="text-align: left; font-size: 13px; margin-top: 4px;"> Chuẩn Đoán Động Cơ</span></a>
+                <a type="button" class="nav-link  " style="display: flex;" (click)="checkPage = 2">
+                    <i class="fa fa-laptop me-2"></i>
+                    <span style="text-align: left; font-size: 13px; margin-top: 4px;">Test Dữ Liệu Khác Trên Mô
+                        Hình</span></a>
+                <a type="button" class="nav-item nav-link" (click)="logOut()"><i class="fa fa-th me-2"></i>Log Out</a>
+
+            </div>
+        </nav>
+    </div>
+    <!-- Sidebar End -->
+
+
+    <!-- Content Start -->
+    <div class="content">
+        <!-- Navbar Start -->
+        <nav class="navbar navbar-expand bg-light navbar-light sticky-top px-4 py-0">
+            <a href="index.html" class="navbar-brand d-flex d-lg-none me-4">
+                <h2 class=" mb-0"><i class="fa fa-hashtag"></i></h2>
+            </a>
+            <a class="sidebar-toggler flex-shrink-0">
+                <i style="color: black;" class="fa fa-bars"></i>
+            </a>
+
+            <div class="navbar-nav align-items-center ms-auto">
+
+                <div class="nav-item dropdown">
+                    <a>
+                        <span class="d-none d-lg-inline-flex">Admin</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+        <!-- Navbar End -->
+
+
+        <!-- Recent Sales Start -->
+        <div class="container-fluid pt-4 px-4 ">
+            <div class="container-fluid pt-4 px-4">
+                <!-- bg-light -->
+                <div class=" rounded-top p-4">
+                    <div class=" text-center rounded p-4 height-85">
+                        <ng-container *ngIf="checkPage == 1">
+
+                            <img src="assets/dothi.png">
+
+                        </ng-container>
+
+                        <ng-container *ngIf="checkPage == 2">
+                            <div class="wrap">
+                                <div class="col-6 d-v-moment">
+                                    <div class="moment">
+                                        <div>
+                                            <h5 style="padding-bottom: 30px;">Source Domain</h5>
+                                        </div>
+
+                                        <i *ngIf="url == null" class="fa fa-laptop me-2 laptop-css"></i>
+                                        <img *ngIf="url != null" style="border-radius: 15px;" src="{{url}}" alt=""
+                                            width="339" height="206">
+
+                                    </div>
+                                    <div style="width: 80%; margin-top: 10px;">
+                                        <input type="file" (change)="onFileMoment1($event)" class="form-control"
+                                            id="img" name="file">
+                                    </div>
+                                </div>
+                                <div class="col-6 d-v-moment">
+                                    <div class="moment">
+                                        <div>
+                                            <h5 style="padding-bottom: 30px;">Source Target</h5>
+                                        </div>
+
+                                        <i  *ngIf="url2 == null" class="fa fa-laptop me-2 laptop-css"></i>
+                                        <img *ngIf="url2 != null" style="border-radius: 15px;" src="{{url2}}" alt=""
+                                        width="339" height="206">
+
+                                    </div>
+                                    <div style="width: 80%; margin-top: 10px;">
+                                        <input type="file" (change)="onFileMoment2($event)" class="form-control" id="img">
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="col-12" style="padding: 20px;">
+                                <button type="submit" class="btn btn-primary btn-cus " style="width: 90%;"
+                                    (click)="onSubmit()"><span style="font-size: 15px; font-weight: 500;">Khởi Động Mô
+                                        Hình</span></button>
+                            </div>
+                            <hr>
+                            <div class="wrap">
+                                <div class="col-12 d-v-moment -result">
+                                    <h5>Kết Quả Mô Hình</h5>
+                                    <!-- <input type="text" [(ngModel)]="mess">
+                                   <button (click)="sendChat()">send</button>
+                                   <button (click)="sendWithFile()">sendWithFile</button> -->
+                                    <img [src]="res?.img1">
+                                    <img [src]="res?.img2">
+                                    <div style="width: 100%;">
+                                        {{res?.ressult}}
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+
+
+
+                        <ng-container *ngIf="checkPage == 3">
+                            <button id="btnOptions" type="button" class="btn btn-primary btn-cus"
+                            style="width: 20%; margin-top: 10px;" (click)="add()">Thêm Cấu Hình</button>
+                            <div class="wrap-new">
+                                <ng-container *ngFor="let item of engineList">
+                                    <div class="col-6 d-v-moment" style="float: left;">
+
+                                        <div class="moment">
+                                            <div>
+                                                <h5 style="padding-bottom: 30px;">{{item.name}}</h5>
+                                            </div>
+
+                                            <i class="fa fa-laptop me-2 laptop-css"></i>
+                                            <!-- <img *ngIf="url != null" style="border-radius: 15px;" src="{{url}}" alt=""
+                                            width="339" height="206"> -->
+
+                                        </div>
+                                        <button id="btnOptions" type="button" class="btn btn-primary btn-cus"
+                                            style="width: 74%; margin-top: 10px;" data-bs-toggle="modal"
+                                            data-bs-target="#exampleModal">
+                                            Cấu Hình
+                                        </button>
+                                        <button id="btnOptions" type="button" class="btn btn-primary btn-cus"
+                                            style="width: 74%; margin-top: 10px;">
+                                            Khởi Động Mô Hình
+                                        </button>
+
+                                        <div class="wrap">
+
+                                            <div class="col-12 d-v-moment -result"
+                                                style="border-top: 1px solid black ; margin-top: 10px;">
+                                                <h5>Kết Quả Mô Hình</h5>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </ng-container>
+
+                            </div>
+                            <!-- Button trigger modal -->
+
+
+                            <!-- Modal -->
+                            <div class="modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Cấu Hình</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body" style="text-align: left;">
+                                            <form>
+                                                <div class="mb-3">
+                                                    <label for="exampleInputEmail1"
+                                                        class="form-label">YourAuthToken</label>
+                                                    <input type="text" class="form-control" id="exampleInputEmail1"
+                                                        aria-describedby="emailHelp">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleInputPassword1"
+                                                        class="form-label">TEMPLATE_NAME</label>
+                                                    <input type="text" class="form-control" id="exampleInputPassword1">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="exampleInputPassword1" class="form-label">
+                                                        TEMPLATE_ID</label>
+                                                    <input type="text" class="form-control" id="exampleInputPassword1">
+                                                </div>
+
+                                                <!-- <div class="mb-3 form-check">
+                                                  <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                                                  <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                                                </div> -->
+
+                                            </form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Save
+                                                changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-container>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
